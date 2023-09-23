@@ -16,7 +16,7 @@ function Forgot(){
         }
     })
     async function forgotPass(obj){
-        let result = await fetch("http://localhost:8001/forgot", {
+        let result = await fetch("http://localhost:9001/forgot", {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{

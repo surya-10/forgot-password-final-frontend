@@ -18,7 +18,7 @@ function UpdatePassword(){
         }
     })
     async function updatePass(obj){
-        let result = await fetch("http://localhost:8001/update-new-password", {
+        let result = await fetch("http://localhost:9001/update-new-password", {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{

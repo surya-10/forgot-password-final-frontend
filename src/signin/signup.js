@@ -20,7 +20,7 @@ function Signup(){
         }
     })
     async function addUser(obj){
-        let result = await fetch("http://localhost:8001/signup", {
+        let result = await fetch("http://localhost:9001/signup", {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{

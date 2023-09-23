@@ -14,11 +14,13 @@ function Reset(){
         },
         validationSchema:userValidation,
         onSubmit:(obj)=>{
-            resetPass(obj)
+            console.log(obj);
+            resetPass(obj);
+            console.log(obj);
         }
     })
     async function resetPass(obj){
-        let result = await fetch(`http://localhost:8001/reset-password/${id}/${token}`, {
+        let result = await fetch(`http://localhost:9001/reset-password/${id}/${token}`, {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{
