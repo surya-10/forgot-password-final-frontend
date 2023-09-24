@@ -20,7 +20,7 @@ function Signup(){
         }
     })
     async function addUser(obj){
-        let result = await fetch("http://localhost:9001/signup", {
+        let result = await fetch("https://forgotpassword-mbwj.onrender.com/signup", {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{

@@ -20,7 +20,7 @@ function Reset(){
         }
     })
     async function resetPass(obj){
-        let result = await fetch(`http://localhost:9001/reset-password/${id}/${token}`, {
+        let result = await fetch(`https://forgotpassword-mbwj.onrender.com/reset-password/${id}/${token}`, {
             method:"POST",
             body:JSON.stringify(obj),
             headers:{
