@@ -1,10 +1,12 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 let userValidation = yup.object({
     email:yup.string().required("email cannot be empty"),
 })
 function Forgot(){
+    let [show, setShow] = useState(false);
     let navigate = useNavigate();
     let {values, handleChange, handleSubmit, handleBlur, touched, errors} = useFormik({
         initialValues:{
@@ -16,6 +18,7 @@ function Forgot(){
         }
     })
     async function forgotPass(obj){
+        setShow(true);
         let result = await fetch("https://forgotpassword-mbwj.onrender.com/forgot", {
             method:"POST",
             body:JSON.stringify(obj),
@@ -24,6 +27,7 @@ function Forgot(){
             }
         })
         let output = await result.json();
+        setShow(false);
         if(output.status==201){
             alert("reset link sent successfully to you");
             navigate("/login")
@@ -58,6 +62,11 @@ function Forgot(){
                     </form>
                 </div>
             </div>
+            {show && <div className="spin">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>}
         </div>
     )
 }

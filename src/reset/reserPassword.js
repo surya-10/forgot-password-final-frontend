@@ -1,10 +1,12 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as yup from "yup";
 let userValidation = yup.object({
     password:yup.string().required("password cannot be empty")
 })
 function Reset(){
+    let [show, setShow] = useState(false);
     let navigate = useNavigate();
     let{id, token} = useParams();
     localStorage.setItem("id", id);
@@ -20,6 +22,7 @@ function Reset(){
         }
     })
     async function resetPass(obj){
+        setShow(true);
         let result = await fetch(`https://forgotpassword-mbwj.onrender.com/reset-password/${id}/${token}`, {
             method:"POST",
             body:JSON.stringify(obj),
@@ -28,6 +31,7 @@ function Reset(){
             }
         })
         let output = await result.json();
+        setShow(false);
         if(output.finalResult===true && output.status==="matching"){
             navigate("/update-new-password");
         }
@@ -63,6 +67,11 @@ function Reset(){
                     </form>
                 </div>
             </div>
+            {show && <div className="spin">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>}
         </div>
     )
 }

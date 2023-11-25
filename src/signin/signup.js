@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 let userValidation = yup.object({
@@ -7,6 +8,7 @@ let userValidation = yup.object({
     password:yup.string().required("password cannot be empty")
 })
 function Signup(){
+    let [show, setShow] = useState(false);
     let navigate = useNavigate();
     let {values, handleChange, handleSubmit, handleBlur, touched, errors} = useFormik({
         initialValues:{
@@ -20,6 +22,7 @@ function Signup(){
         }
     })
     async function addUser(obj){
+        setShow(true);
         let result = await fetch("https://forgotpassword-mbwj.onrender.com/signup", {
             method:"POST",
             body:JSON.stringify(obj),
@@ -28,6 +31,7 @@ function Signup(){
             }
         })
         let output = await result.json();
+        setShow(false);
         if(output.status==201){
             alert("Your signup was succesfull. Go and Login");
             navigate("/login")
@@ -78,6 +82,11 @@ function Signup(){
                     </form>
                 </div>
             </div>
+            {show && <div className="spin">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>}
         </div>
     )
 }

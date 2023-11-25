@@ -4,24 +4,26 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 let userValidation = yup.object({
     email: yup.string().required("email cannot be empty"),
-    password: yup.string().required("password cannot be empty")
+    accessKey: yup.string().required("password cannot be empty")
 })
-function Login() {
+
+function LoginAsAdmin() {
     let [show, setShow] = useState(false);
     let navigate = useNavigate();
     let { values, handleChange, handleSubmit, handleBlur, touched, errors } = useFormik({
         initialValues: {
             email: "",
-            password: ""
+            accessKey: ""
         },
         validationSchema: userValidation,
         onSubmit: (obj) => {
-            loginUser(obj)
+            loginUser(obj);
         }
     })
+
     async function loginUser(obj) {
         setShow(true);
-        let result = await fetch("https://forgotpassword-mbwj.onrender.com/login", {
+        let result = await fetch("https://forgotpassword-mbwj.onrender.com/access/admin/login", {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
@@ -31,28 +33,26 @@ function Login() {
         let output = await result.json();
         setShow(false);
         if (output.status == 200) {
-            localStorage.setItem("email", output.email);
-            navigate("/user/students/all");
+            navigate("/admin/auth/all");
         }
-        else if (output.status == 404 && output.msg == "user does not exist") {
+        else if (output.status == 404 && output.msg == "not found") {
             document.querySelector(".msg").style.display = "flex";
         }
-        else if (output.status == 400 && output.msg == "incorrect") {
+        else if (output.status == 404 && output.msg == "accesskey incorrect") {
             document.querySelector(".msg2").style.display = "flex";
         }
     }
-
     return (
-        <div className="signup-div min-vh-100 d-flex justify-content-center align-items-center">
+        <div className="admin-login-div min-vh-100 d-flex justify-content-center align-items-center">
             <div className="signup">
                 <div className="container-fluid d-flex justify-content-center align-items-stretch flex-column cont">
-                    <p className="h5 mb-4">WELCOME, LOGIN HERE</p>
+                    <p className="h5 mb-4">ADMIN LOGIN</p>
                     <form onSubmit={handleSubmit}>
                         <div className="forms d-flex justify-content-center flex-column align-content-center">
                             {/* <div className="form">
                             </div> */}
                             <div className="form">
-                                <input type="email" placeholder="enter email" className="form-control"
+                                <input type="email" placeholder="admin email" className="form-control"
                                     name="email"
                                     value={values.email}
                                     onChange={handleChange}
@@ -60,20 +60,19 @@ function Login() {
                                 {touched.email && errors.email ? <div className="text-danger">email cannot be empty</div> : ""}
                             </div>
                             <div className="form">
-                                <input type="password" placeholder="enter password" className="form-control"
-                                    name="password"
-                                    value={values.password}
+                                <input type="password" placeholder="enter accessKey" className="form-control"
+                                    name="accessKey"
+                                    value={values.accessKey}
                                     onChange={handleChange}
                                     onBlur={handleBlur} />
-                                {touched.password && errors.password ? <div className="text-danger">password cannot be empty</div> : ""}
+                                {touched.accessKey && errors.accessKey ? <div className="text-danger">accessKey cannot be empty</div> : ""}
                             </div>
                         </div>
-                        <p className="msg text-danger">Your email does not exit. Do signup</p>
-                        <p className="text-danger msg2">Username or password is incorrect</p>
-                        <p className="sign-btn" onClick={() => navigate("/forgot-password")}>Forgot password ?</p>
+                        <p className="msg text-danger">Your are not a admin. go back and select student.</p>
+                        <p className="text-danger msg2">invalid accessKey</p>
                         <button className="btn bg-success text-white" type="submit">Login</button>
 
-                        <p className="mt-3 sign-btn" onClick={() => navigate("/signup")}>New user ? click here</p>
+                        <p className="mt-3 sign-btn" onClick={() => navigate("/signup")}>Not admin ? click here</p>
                     </form>
                 </div>
             </div>
@@ -85,4 +84,4 @@ function Login() {
         </div>
     )
 }
-export default Login;
+export default LoginAsAdmin;
