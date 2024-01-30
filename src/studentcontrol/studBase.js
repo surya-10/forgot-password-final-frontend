@@ -19,7 +19,7 @@ function StudentBase({children}){
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <h6 className="dash text-light pe-4" aria-current="page" onClick={() => navigate("/user/students/all")}>Students</h6>
+                                    <h6 className="dash text-light pe-4 rounded text-center ps-4" aria-current="page" onClick={() => navigate("/user/students/all")}>Students</h6>
                                 </li>
                                 <li className="nav-item">
                                     <h6 className="dash text-light pe-4" aria-current="page" onClick={() => navigate("/user/student/my-dashboard")}>Me</h6>

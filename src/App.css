@@ -89,8 +89,8 @@ body{
 .spin{
   position: absolute;
   top: 50%;
-  left: 50%;
-  translate: (-50%, -50%);
+  left: 48%;
+  /* translate: (20%, -50%); */
 }
 .names{
   gap: 20px;

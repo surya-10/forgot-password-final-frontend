@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const UserData = () =>{
     let navigate = useNavigate();
     let [show, setShow] = useState(false);
+    let [add, setAdd] = useState("Add");
     let [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -27,6 +28,7 @@ const UserData = () =>{
 
     const handleSubmit = async (e)=>{
         setShow(true);
+        setAdd("Adding");
         e.preventDefault();
         const dataToSend = new FormData();
         dataToSend.append('firstname',formData.firstname);
@@ -49,7 +51,9 @@ const UserData = () =>{
             }
             if(result.data.status==404){
                 alert("student data already exist");
+                setAdd("Add");
             }
+            setAdd("Add");
           } catch (error) {
             console.error('Error submitting form:', error);
             alert('Error submitting form. Please try again.');
@@ -61,7 +65,7 @@ const UserData = () =>{
             <Base>
             <div className="container d-flex justify-content-center align-items-center min-vh-100 flex-column mt-5">
                 <div className="d-flex align-self-center">
-                    <p className="fs-6 tx-prim fw-bold head">As you are admin for our college, you have add students data.</p>
+                    <p className="fs-6 tx-prim fw-bold head">As you are admin of our college, you have to add students data.</p>
                 </div>
                 <div className="form-div d-flex flex-column justify-content-center align-items-center">
 
@@ -161,7 +165,7 @@ const UserData = () =>{
                                     </div>
                                 </div>
                                 <div className="add-btn">
-                                    <button className="btn bg-success text-white" type="submit">Add</button>
+                                    <button className="btn bg-success text-white" type="submit">{add}</button>
                                 </div>
                             </div>
                         </form>

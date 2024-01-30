@@ -9,6 +9,7 @@ let userValidation = yup.object({
 
 function LoginAsAdmin() {
     let [show, setShow] = useState(false);
+    let [admin, setAdmin] = useState("Login");
     let navigate = useNavigate();
     let { values, handleChange, handleSubmit, handleBlur, touched, errors } = useFormik({
         initialValues: {
@@ -22,6 +23,7 @@ function LoginAsAdmin() {
     })
 
     async function loginUser(obj) {
+        setAdmin("Verifying");
         setShow(true);
         let result = await fetch("https://forgotpassword-mbwj.onrender.com/access/admin/login", {
             method: "POST",
@@ -32,6 +34,7 @@ function LoginAsAdmin() {
         })
         let output = await result.json();
         setShow(false);
+        setAdmin("Login");
         if (output.status == 200) {
             navigate("/admin/auth/all");
         }
@@ -70,7 +73,7 @@ function LoginAsAdmin() {
                         </div>
                         <p className="msg text-danger">Your are not a admin. go back and select student.</p>
                         <p className="text-danger msg2">invalid accessKey</p>
-                        <button className="btn bg-success text-white" type="submit">Login</button>
+                        <button className="btn bg-success text-white" type="submit">{admin}</button>
 
                         <p className="mt-3 sign-btn" onClick={() => navigate("/signup")}>Not admin ? click here</p>
                     </form>

@@ -7,6 +7,7 @@ let userValidation = yup.object({
 })
 function UpdatePassword(){
     let [show, setShow] = useState(false);
+    let [update, setUpdate] = useState("Update");
     let navigate = useNavigate();
     let id = localStorage.getItem("id");
     let {values, handleChange, handleSubmit, handleBlur, touched, errors} = useFormik({
@@ -20,6 +21,7 @@ function UpdatePassword(){
         }
     })
     async function updatePass(obj){
+        setUpdate("Updating....");
         setShow(true);
         let result = await fetch("https://forgotpassword-mbwj.onrender.com/update-new-password", {
             method:"POST",
@@ -29,6 +31,7 @@ function UpdatePassword(){
             }
         })
         let output = await result.json();
+        setUpdate("Update");
         setShow(false);
         if(output.response){
             alert("New password has been updated");
@@ -52,7 +55,7 @@ function UpdatePassword(){
                                 {touched.password && errors.password ? <div className="text-danger">password cannot be empty</div>:""}
                             </div>
                         </div>
-                        <button className="btn bg-success text-white" type="submit">Update</button>
+                        <button className="btn bg-success text-white" type="submit">{update}</button>
                     </form>
                 </div>
             </div>

@@ -9,6 +9,7 @@ function EditStudents() {
     let navigate = useNavigate()
     let [show, setShow] = useState(false);
     let [status, setStatus] = useState("false");
+    let [update, setUpdate] = useState("Update");
     let [imageVal, setImageVal] = useState({
         photo:null
     });
@@ -58,6 +59,7 @@ function EditStudents() {
     async function handleSubmit(e) {
         
         e.preventDefault();
+        setUpdate("Updating....")
         setShow(true);
         const dataToSend = new FormData();
         dataToSend.append('firstname', userData.firstname);
@@ -86,6 +88,7 @@ function EditStudents() {
                 alert("student data updated");
                 let remaingData = await axios.post(`https://forgotpassword-mbwj.onrender.com/update/user/data/${id}`, dataToSend);
                 setShow(false);
+                setUpdate("Update");
                 if(remaingData.data.status===200){
                     navigate("/admin/auth/all");
                 }
@@ -93,7 +96,9 @@ function EditStudents() {
             }
             if (result.data.status == 404) {
                 alert("student data already exist");
+                setUpdate("Update");
             }
+            setUpdate("Update");
         }
       catch (error) {
             console.error('Error submitting form:', error);
@@ -225,7 +230,7 @@ function EditStudents() {
                                         </div>
                                     </div>
                                     <div className="add-btn">
-                                        <button className="btn bg-success text-white" type="submit">Update</button>
+                                        <button className="btn bg-success text-white" type="submit">{update}</button>
                                     </div>
                                 </div>
                             </form>

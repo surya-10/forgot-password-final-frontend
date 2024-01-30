@@ -31,9 +31,9 @@ function CurrentStudent() {
         <div className="curent-stud-div">
             <StudentBase>
                 <p className="fs-5 p-2">Your dashboard</p>
-                <div className="show-students d-flex jutify-content-center align-items-start flex-wrap align-content-center">
+                <div className="show-students d-flex jutify-content-center align-items-center flex-wrap align-content-center">
                     {findStud.map((stud, ind) => (
-                        <div className="stud1 d-flex flex-column justify-content-start align-items-start bg-white p-5 flex-wrap" key={ind}>
+                        <div className="stud1 d-flex flex-column justify-content-center align-items-center bg-white p-3 flex-wrap" key={ind}>
                             <div className="stud-img mb-4">
                                 <img src={`data:image/jpeg;base64,${stud.photo}`} alt={stud.name} />
                             </div>

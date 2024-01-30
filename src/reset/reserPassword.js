@@ -7,6 +7,7 @@ let userValidation = yup.object({
 })
 function Reset(){
     let [show, setShow] = useState(false);
+    let [reset, setReset] = useState("Verify")
     let navigate = useNavigate();
     let{id, token} = useParams();
     localStorage.setItem("id", id);
@@ -23,6 +24,7 @@ function Reset(){
     })
     async function resetPass(obj){
         setShow(true);
+        setReset("Verifying....");
         let result = await fetch(`https://forgotpassword-mbwj.onrender.com/reset-password/${id}/${token}`, {
             method:"POST",
             body:JSON.stringify(obj),
@@ -32,6 +34,7 @@ function Reset(){
         })
         let output = await result.json();
         setShow(false);
+        setReset("Verify");
         if(output.finalResult===true && output.status==="matching"){
             navigate("/update-new-password");
         }
@@ -63,7 +66,7 @@ function Reset(){
                            
                         </div>
                         <p className="temp">tempoary password is incorrect</p>
-                        <button className="btn bg-success text-white" type="submit">Verify</button>
+                        <button className="btn bg-success text-white" type="submit">{reset}</button>
                     </form>
                 </div>
             </div>
